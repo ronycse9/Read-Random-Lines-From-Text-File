@@ -1,4 +1,7 @@
 <?php 
+//start session variable
+session_start();
+
 //file open in read mode
 $myfile = fopen("quotes.txt", "r") or die("Unable to open file!");
 $word_array = $new_word_array = array();
@@ -27,7 +30,17 @@ echo "</pre>";
 $line = rand(0,(count($new_word_array)-1));
 
 //print the random line
-echo $new_word_array[$line];
+echo $new_word_array[$line]."<br>";
+
+//if you need show random quote whole day log same then use session varibale
+$quote = $new_word_array[$line];
+
+if(!isset($_SESSION['date']) || $_SESSION['date'] < date("Y-m-d")){	
+	$_SESSION['date']  = date("Y-m-d");
+	$_SESSION['quote'] = $quote;
+}
+
+echo $_SESSION['quote'];
 
 
 //close the open file
